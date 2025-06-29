@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #oA00CA;
+    background-color: #0A00CA;
     font-family: "Sarabun", "Tahoma", sans-serif;
     
     display: flex;
@@ -81,8 +81,7 @@ body {
 
 #bottom-left h2,
 #bottom-right h2 {
-    color: #0A00CA;
-    color : white;
+    color: white;
     border-bottom: 3px solid #0A00CA;
     padding-bottom: 6px;
     margin-bottom: 15px;
