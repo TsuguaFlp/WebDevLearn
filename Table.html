@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>LaJaDa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        .search-bar {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .search-bar input {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid #60a5fa;
+            font-size: 1rem;
+            width: 300px;
+            max-width: 90vw;
+            transition: box-shadow 0.2s;
+        }
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #60a5fa55;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.1rem;
+            background: #fff;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            animation: tableFadeIn 1s ease;
+        }
+        @keyframes tableFadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        th, td {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+        th {
+            background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        tr:nth-child(even) {
+            background: #f1f5f9;
+        }
+        tr {
+            opacity: 0;
+            animation: rowFadeIn 0.7s ease forwards;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        tbody tr {
+            animation-delay: calc(0.1s * var(--i));
+        }
+        @keyframes rowFadeIn {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        tbody tr:hover {
+            background: #e0e7ef;
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(96,165,250,0.15);
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+        tbody tr td img {
+            animation-delay: 1s;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: imgPopIn 0.7s cubic-bezier(.68,-0.55,.27,1.55) forwards;
+            transition: filter 0.2s, transform 0.2s;
+        }
+        @keyframes imgPopIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        tbody img {
+            cursor: zoom-in;
+        }
+        tbody tr td img:hover {
+            filter: brightness(1.1) drop-shadow(0 0 8px #60a5fa88);
+            transform: scale(1.08) rotate(-2deg);
+        }
+        tfoot td {
+            font-weight: bold;
+            background: #e0e7ef;
+            color: #2563eb;
+            border-top: 2px solid #2563eb;
+        }
+        .img-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            align-items: center; justify-content: center;
+        }
+        #img-modal-toggle-1:checked ~ .img-modal-1,
+        #img-modal-toggle-2:checked ~ .img-modal-2,
+        #img-modal-toggle-3:checked ~ .img-modal-3,
+        #img-modal-toggle-4:checked ~ .img-modal-4,
+        #img-modal-toggle-5:checked ~ .img-modal-5 {
+            display: flex;
+            background: rgba(0,0,0,0.7);
+        }
+        .img-modal-bg {
+            position: absolute; left:0; top:0; width:100vw; height:100vh; cursor: pointer;
+        }
+        .img-modal img {
+            position: relative;
+            max-width: 90vw;
+            max-height: 80vh;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            background: #fff;
+            z-index: 1;
+        }
+        @media (max-width: 800px) {
+            .container {
+                padding: 0.2rem;
+            }
+            table, thead, tbody, th, td, tr, tfoot {
+                display: block;
+            }
+            thead tr, tfoot tr {
+                display: none;
+            }
+            tr {
+                margin-bottom: 1.5rem;
+                background: #fff !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                border-radius: 8px;
+            }
+            td {
+                position: relative;
+                padding-left: 50%;
+                text-align: left;
+                border: none;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            td:before {
+                position: absolute;
+                top: 1rem;
+                left: 1rem;
+                width: 45%;
+                white-space: nowrap;
+                font-weight: bold;
+                color: #2563eb;
+                content: attr(data-label);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="ค้นหาสินค้า...">
+        </div>
+        <input type="checkbox" id="img-modal-toggle-1" style="display:none;">
+        <div class="img-modal img-modal-1">
+            <label for="img-modal-toggle-1" class="img-modal-bg"></label>
+            <img src="https://www.dohome.co.th/media/catalog/product/cache/e446f15aaa8dc66b80b7a0df334f7c5a/1/0/10373333_df_1200_1.png" alt="ดินสอ">
+        </div>
+        <input type="checkbox" id="img-modal-toggle-2" style="display:none;">
+        <div class="img-modal img-modal-2">
+            <label for="img-modal-toggle-2" class="img-modal-bg"></label>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/The_Pen.png" alt="ปากกา">
+        </div>
+        <input type="checkbox" id="img-modal-toggle-3" style="display:none;">
+        <div class="img-modal img-modal-3">
+            <label for="img-modal-toggle-3" class="img-modal-bg"></label>
+            <img src="https://shop-image.readyplanet.com/IZsIBBHBR0H_uWfeVoGAXX2x2sE=/7bcca6c81d00440691446bbad50e0e81" alt="ยางลบ">
+        </div>
+        <input type="checkbox" id="img-modal-toggle-4" style="display:none;">
+        <div class="img-modal img-modal-4">
+            <label for="img-modal-toggle-4" class="img-modal-bg"></label>
+            <img src="https://likeoffice.co.th/cdn/shop/products/360049.jpg?v=1621915442" alt="ปากกาลบคำผิด">
+        </div>
+        <input type="checkbox" id="img-modal-toggle-5" style="display:none;">
+        <div class="img-modal img-modal-5">
+            <label for="img-modal-toggle-5" class="img-modal-bg"></label>
+            <img src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/97/88/8856976000597/8856976000597_1-20231109194914-.jpg" alt="กระดาษA4">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ลำดับ</th>
+                    <th>รูปสินค้า</th>
+                    <th>ชื่อสินค้า</th>
+                    <th>ราคา</th>
+                    <th>จำนวน</th>
+                    <th>รวม</th>
+                    <th>หมายเหตุ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="ลำดับ">1</td>
+                    <td data-label="รูปสินค้า">
+                        <label for="img-modal-toggle-1" style="cursor:zoom-in;">
+                            <img src="https://www.dohome.co.th/media/catalog/product/cache/e446f15aaa8dc66b80b7a0df334f7c5a/1/0/10373333_df_1200_1.png" alt="ดินสอ">
+                        </label>
+                    </td>
+                    <td data-label="ชื่อสินค้า">ดินสอ</td>
+                    <td data-label="ราคา">12</td>
+                    <td data-label="จำนวน">2</td>
+                    <td data-label="รวม">24</td>
+                    <td data-label="หมายเหตุ"></td>
+                </tr>
+                <tr>
+                    <td data-label="ลำดับ">2</td>
+                    <td data-label="รูปสินค้า">
+                        <label for="img-modal-toggle-2" style="cursor:zoom-in;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/The_Pen.png" alt="ปากกา">
+                        </label>
+                    </td>
+                    <td data-label="ชื่อสินค้า">ปากกา</td>
+                    <td data-label="ราคา">22</td>
+                    <td data-label="จำนวน">3</td>
+                    <td data-label="รวม">66</td>
+                    <td data-label="หมายเหตุ"></td>
+                </tr>
+                <tr>
+                    <td data-label="ลำดับ">3</td>
+                    <td data-label="รูปสินค้า">
+                        <label for="img-modal-toggle-3" style="cursor:zoom-in;">
+                            <img src="https://shop-image.readyplanet.com/IZsIBBHBR0H_uWfeVoGAXX2x2sE=/7bcca6c81d00440691446bbad50e0e81" alt="ยางลบ">
+                        </label>
+                    </td>
+                    <td data-label="ชื่อสินค้า">ยางลบ</td>
+                    <td data-label="ราคา">6</td>
+                    <td data-label="จำนวน">2</td>
+                    <td data-label="รวม">12</td>
+                    <td data-label="หมายเหตุ"></td>
+                </tr>
+                <tr>
+                    <td data-label="ลำดับ">4</td>
+                    <td data-label="รูปสินค้า">
+                        <label for="img-modal-toggle-4" style="cursor:zoom-in;">
+                            <img src="https://likeoffice.co.th/cdn/shop/products/360049.jpg?v=1621915442" alt="ปากกาลบคำผิด">
+                        </label>
+                    </td>
+                    <td data-label="ชื่อสินค้า">ปากกาลบคำผิด</td>
+                    <td data-label="ราคา">16</td>
+                    <td data-label="จำนวน">2</td>
+                    <td data-label="รวม">32</td>
+                    <td data-label="หมายเหตุ"></td>
+                </tr>
+                <tr>
+                    <td data-label="ลำดับ">5</td>
+                    <td data-label="รูปสินค้า">
+                        <label for="img-modal-toggle-5" style="cursor:zoom-in;">
+                            <img src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/97/88/8856976000597/8856976000597_1-20231109194914-.jpg" alt="กระดาษA4">
+                        </label>
+                    </td>
+                    <td data-label="ชื่อสินค้า">กระดาษA4</td>
+                    <td data-label="ราคา">32</td>
+                    <td data-label="จำนวน">1</td>
+                    <td data-label="รวม">32</td>
+                    <td data-label="หมายเหตุ"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">รวมทั้งหมด</td>
+                    <td>162</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script>
+        document.querySelectorAll('tbody tr').forEach((tr, i) => {
+            tr.style.setProperty('--i', i + 1);
+        });
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase();
+            document.querySelectorAll('tbody tr').forEach(row => {
+                let text = row.innerText.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
+        }); 
