@@ -85,9 +85,6 @@
             box-shadow: 0 4px 16px rgba(96,165,250,0.15);
             transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
         }
-        tbody tr td img {
-            animation-delay: 1s;
-        }
         img {
             max-width: 100px;
             max-height: 100px;
@@ -97,15 +94,13 @@
             transform: scale(0.9);
             animation: imgPopIn 0.7s cubic-bezier(.68,-0.55,.27,1.55) forwards;
             transition: filter 0.2s, transform 0.2s;
+            cursor: zoom-in;
         }
         @keyframes imgPopIn {
             to {
                 opacity: 1;
                 transform: scale(1);
             }
-        }
-        tbody img {
-            cursor: zoom-in;
         }
         tbody tr td img:hover {
             filter: brightness(1.1) drop-shadow(0 0 8px #60a5fa88);
@@ -227,7 +222,7 @@
                 <tr>
                     <td data-label="ลำดับ">1</td>
                     <td data-label="รูปสินค้า">
-                        <label for="img-modal-toggle-1" style="cursor:zoom-in;">
+                        <label for="img-modal-toggle-1">
                             <img src="https://www.dohome.co.th/media/catalog/product/cache/e446f15aaa8dc66b80b7a0df334f7c5a/1/0/10373333_df_1200_1.png" alt="ดินสอ">
                         </label>
                     </td>
@@ -240,7 +235,7 @@
                 <tr>
                     <td data-label="ลำดับ">2</td>
                     <td data-label="รูปสินค้า">
-                        <label for="img-modal-toggle-2" style="cursor:zoom-in;">
+                        <label for="img-modal-toggle-2">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/The_Pen.png" alt="ปากกา">
                         </label>
                     </td>
@@ -253,7 +248,7 @@
                 <tr>
                     <td data-label="ลำดับ">3</td>
                     <td data-label="รูปสินค้า">
-                        <label for="img-modal-toggle-3" style="cursor:zoom-in;">
+                        <label for="img-modal-toggle-3">
                             <img src="https://shop-image.readyplanet.com/IZsIBBHBR0H_uWfeVoGAXX2x2sE=/7bcca6c81d00440691446bbad50e0e81" alt="ยางลบ">
                         </label>
                     </td>
@@ -266,7 +261,7 @@
                 <tr>
                     <td data-label="ลำดับ">4</td>
                     <td data-label="รูปสินค้า">
-                        <label for="img-modal-toggle-4" style="cursor:zoom-in;">
+                        <label for="img-modal-toggle-4">
                             <img src="https://likeoffice.co.th/cdn/shop/products/360049.jpg?v=1621915442" alt="ปากกาลบคำผิด">
                         </label>
                     </td>
@@ -279,7 +274,7 @@
                 <tr>
                     <td data-label="ลำดับ">5</td>
                     <td data-label="รูปสินค้า">
-                        <label for="img-modal-toggle-5" style="cursor:zoom-in;">
+                        <label for="img-modal-toggle-5">
                             <img src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/97/88/8856976000597/8856976000597_1-20231109194914-.jpg" alt="กระดาษA4">
                         </label>
                     </td>
@@ -309,4 +304,7 @@
                 let text = row.innerText.toLowerCase();
                 row.style.display = text.includes(filter) ? '' : 'none';
             });
-        }); 
+        });
+    </script>
+</body>
+</html>
