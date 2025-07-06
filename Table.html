@@ -181,31 +181,42 @@
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="ค้นหาสินค้า...">
         </div>
-        <input type="checkbox" id="img-modal-toggle-1" style="display:none;">
-        <div class="img-modal img-modal-1">
-            <label for="img-modal-toggle-1" class="img-modal-bg"></label>
-            <img src="https://www.dohome.co.th/media/catalog/product/cache/e446f15aaa8dc66b80b7a0df334f7c5a/1/0/10373333_df_1200_1.png" alt="ดินสอ">
-        </div>
-        <input type="checkbox" id="img-modal-toggle-2" style="display:none;">
-        <div class="img-modal img-modal-2">
-            <label for="img-modal-toggle-2" class="img-modal-bg"></label>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/The_Pen.png" alt="ปากกา">
-        </div>
-        <input type="checkbox" id="img-modal-toggle-3" style="display:none;">
-        <div class="img-modal img-modal-3">
-            <label for="img-modal-toggle-3" class="img-modal-bg"></label>
-            <img src="https://shop-image.readyplanet.com/IZsIBBHBR0H_uWfeVoGAXX2x2sE=/7bcca6c81d00440691446bbad50e0e81" alt="ยางลบ">
-        </div>
-        <input type="checkbox" id="img-modal-toggle-4" style="display:none;">
-        <div class="img-modal img-modal-4">
-            <label for="img-modal-toggle-4" class="img-modal-bg"></label>
-            <img src="https://likeoffice.co.th/cdn/shop/products/360049.jpg?v=1621915442" alt="ปากกาลบคำผิด">
-        </div>
-        <input type="checkbox" id="img-modal-toggle-5" style="display:none;">
-        <div class="img-modal img-modal-5">
-            <label for="img-modal-toggle-5" class="img-modal-bg"></label>
-            <img src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/97/88/8856976000597/8856976000597_1-20231109194914-.jpg" alt="กระดาษA4">
-        </div>
+        <div id="img-modals"></div>
+        <script>
+        const modalImages = [
+            {
+                src: "https://www.dohome.co.th/media/catalog/product/cache/e446f15aaa8dc66b80b7a0df334f7c5a/1/0/10373333_df_1200_1.png",
+                alt: "ดินสอ"
+            },
+            {
+                src: "https://upload.wikimedia.org/wikipedia/commons/4/47/The_Pen.png",
+                alt: "ปากกา"
+            },
+            {
+                src: "https://shop-image.readyplanet.com/IZsIBBHBR0H_uWfeVoGAXX2x2sE=/7bcca6c81d00440691446bbad50e0e81",
+                alt: "ยางลบ"
+            },
+            {
+                src: "https://likeoffice.co.th/cdn/shop/products/360049.jpg?v=1621915442",
+                alt: "ปากกาลบคำผิด"
+            },
+            {
+                src: "https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/97/88/8856976000597/8856976000597_1-20231109194914-.jpg",
+                alt: "กระดาษA4"
+            }
+        ];
+        const modalsDiv = document.getElementById('img-modals');
+        modalImages.forEach((img, i) => {
+            const idx = i + 1;
+            modalsDiv.innerHTML += `
+                <input type="checkbox" id="img-modal-toggle-${idx}" style="display:none;">
+                <div class="img-modal img-modal-${idx}">
+                    <label for="img-modal-toggle-${idx}" class="img-modal-bg"></label>
+                    <img src="${img.src}" alt="${img.alt}">
+                </div>
+            `;
+        });
+        </script>
         <table>
             <thead>
                 <tr>
@@ -230,7 +241,7 @@
                     <td data-label="ราคา">12</td>
                     <td data-label="จำนวน">2</td>
                     <td data-label="รวม">24</td>
-                    <td data-label="หมายเหตุ"></td>
+                    <td data-label="หมายเหตุ">-</td>
                 </tr>
                 <tr>
                     <td data-label="ลำดับ">2</td>
@@ -243,7 +254,7 @@
                     <td data-label="ราคา">22</td>
                     <td data-label="จำนวน">3</td>
                     <td data-label="รวม">66</td>
-                    <td data-label="หมายเหตุ"></td>
+                    <td data-label="หมายเหตุ">-</td>
                 </tr>
                 <tr>
                     <td data-label="ลำดับ">3</td>
@@ -256,7 +267,7 @@
                     <td data-label="ราคา">6</td>
                     <td data-label="จำนวน">2</td>
                     <td data-label="รวม">12</td>
-                    <td data-label="หมายเหตุ"></td>
+                    <td data-label="หมายเหตุ">-</td>
                 </tr>
                 <tr>
                     <td data-label="ลำดับ">4</td>
@@ -269,7 +280,7 @@
                     <td data-label="ราคา">16</td>
                     <td data-label="จำนวน">2</td>
                     <td data-label="รวม">32</td>
-                    <td data-label="หมายเหตุ"></td>
+                    <td data-label="หมายเหตุ">-</td>
                 </tr>
                 <tr>
                     <td data-label="ลำดับ">5</td>
@@ -282,7 +293,7 @@
                     <td data-label="ราคา">32</td>
                     <td data-label="จำนวน">1</td>
                     <td data-label="รวม">32</td>
-                    <td data-label="หมายเหตุ"></td>
+                    <td data-label="หมายเหตุ">-</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -294,17 +305,5 @@
             </tfoot>
         </table>
     </div>
-    <script>
-        document.querySelectorAll('tbody tr').forEach((tr, i) => {
-            tr.style.setProperty('--i', i + 1);
-        });
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase();
-            document.querySelectorAll('tbody tr').forEach(row => {
-                let text = row.innerText.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
-            });
-        });
-    </script>
 </body>
 </html>
