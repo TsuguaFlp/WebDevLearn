@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<title>ตารางสินค้า พร้อมฟอร์มสั่งซื้อ</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    padding: 20px;
+  }
+  table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+  th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  th {
+    background: linear-gradient(90deg, #2563eb, #60a5fa);
+    color: white;
+  }
+  img.product-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    cursor: pointer;
+  }
+  button.buy-btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button.buy-btn:hover {
+    background-color: #1d4ed8;
+  }
+  td.qty, td.total {
+    min-width: 50px;
+  }
+  form#orderForm {
+    max-width: 800px;
+    background: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+  form#orderForm h3 {
+    margin-bottom: 20px;
+    color: #2563eb;
+    text-align: center;
+  }
+  form#orderForm label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 600;
+  }
+  form#orderForm input, form#orderForm textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1.5px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  form#orderForm textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  form#orderForm button[type="submit"] {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px 0;
+    background: #2563eb;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  form#orderForm button[type="submit"]:hover {
+    background: #1d4ed8;
+  }
+  .error {
+    color: #e11d48;
+    margin-top: 4px;
+    display: none;
+  }
+  #totalAmount {
+    font-weight: 700;
+    font-size: 18px;
+    text-align: right;
+    margin-bottom: 24px;
+    max-width: 800px;
+  }
+</style>
+</head>
+<body>
+
+<table id="productTable">
+  <thead>
+    <tr>
+      <th>ลำดับ</th>
+      <th>รูปสินค้า</th>
+      <th>ชื่อสินค้า</th>
+      <th>ราคา (บาท)</th>
+      <th>ซื้อ</th>
+      <th>จำนวน</th>
+      <th>รวม (บาท)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr data-price="12" data-name="ดินสอ">
+      <td>1</td>
+      <td><img class="product-img" src="https://www.dohome.co.th/media/catalog/product/cache/e446f15aaa8dc66b80b7a0df334f7c5a/1/0/10373333_df_1200_1.png" alt="ดินสอ"></td>
+      <td>ดินสอ</td>
+      <td>12</td>
+      <td><button class="buy-btn">ซื้อ</button></td>
+      <td class="qty">0</td>
+      <td class="total">0</td>
+    </tr>
+    <tr data-price="22" data-name="ปากกา">
+      <td>2</td>
+      <td><img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/4/47/The_Pen.png" alt="ปากกา"></td>
+      <td>ปากกา</td>
+      <td>22</td>
+      <td><button class="buy-btn">ซื้อ</button></td>
+      <td class="qty">0</td>
+      <td class="total">0</td>
+    </tr>
+    <tr data-price="6" data-name="ยางลบ">
+      <td>3</td>
+      <td><img class="product-img" src="https://shop-image.readyplanet.com/IZsIBBHBR0H_uWfeVoGAXX2x2sE=/7bcca6c81d00440691446bbad50e0e81" alt="ยางลบ"></td>
+      <td>ยางลบ</td>
+      <td>6</td>
+      <td><button class="buy-btn">ซื้อ</button></td>
+      <td class="qty">0</td>
+      <td class="total">0</td>
+    </tr>
+    <tr data-price="16" data-name="ปากกาลบคำผิด">
+      <td>4</td>
+      <td><img class="product-img" src="https://likeoffice.co.th/cdn/shop/products/360049.jpg?v=1621915442" alt="ปากกาลบคำผิด"></td>
+      <td>ปากกาลบคำผิด</td>
+      <td>16</td>
+      <td><button class="buy-btn">ซื้อ</button></td>
+      <td class="qty">0</td>
+      <td class="total">0</td>
+    </tr>
+    <tr data-price="32" data-name="กระดาษA4">
+      <td>5</td>
+      <td><img class="product-img" src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/97/88/8856976000597/8856976000597_1-20231109194914-.jpg" alt="กระดาษA4"></td>
+      <td>กระดาษA4</td>
+      <td>32</td>
+      <td><button class="buy-btn">ซื้อ</button></td>
+      <td class="qty">0</td>
+      <td class="total">0</td>
+    </tr>
+  </tbody>
+</table>
+
+<div id="totalAmount">รวมทั้งหมด: 0 บาท</div>
+
+<form id="orderForm" autocomplete="off">
+  <h3>แบบฟอร์มสั่งซื้อสินค้า</h3>
+
+  <label for="buyerName">ชื่อผู้ซื้อ <span style="color:red">*</span></label>
+  <input type="text" id="buyerName" name="buyerName" required placeholder="กรอกชื่อของคุณ">
+
+  <label for="address">ที่อยู่ <span style="color:red">*</span></label>
+  <textarea id="address" name="address" required placeholder="กรอกที่อยู่สำหรับจัดส่ง"></textarea>
+
+  <label for="phone">เบอร์โทรศัพท์ <span style="color:red">*</span></label>
+  <input type="tel" id="phone" name="phone" pattern="[0-9]{9,12}" required placeholder="กรอกเบอร์โทรศัพท์ เช่น 0812345678">
+
+  <button type="submit">ส่งคำสั่งซื้อ</button>
+
+  <div id="formMessage" class="error"></div>
+</form>
+
+<script>
+  const buyButtons = document.querySelectorAll('button.buy-btn');
+  const totalAmountDiv = document.getElementById('totalAmount');
+  const orderForm = document.getElementById('orderForm');
+  const formMessage = document.getElementById('formMessage');
+
+  function updateTotal() {
+    let total = 0;
+    document.querySelectorAll('td.total').forEach(td => {
+      total += Number(td.textContent);
+    });
+    totalAmountDiv.textContent = `รวมทั้งหมด: ${total} บาท`;
+  }
+
+  buyButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const row = button.closest('tr');
+      const productName = row.getAttribute('data-name');
+      const price = Number(row.getAttribute('data-price'));
+
+      let qtyStr = prompt(`กรุณากรอกจำนวนที่ต้องการซื้อของ "${productName}":`, "1");
+      if (qtyStr === null) return;
+      let qty = parseInt(qtyStr);
+      if (isNaN(qty) || qty <= 0) {
+        alert('กรุณากรอกจำนวนเป็นตัวเลขจำนวนเต็มที่มากกว่า 0');
+        return;
+      }
+
+      row.querySelector('td.qty').textContent = qty;
+      row.querySelector('td.total').textContent = price * qty;
+
+      updateTotal();
+    });
+  });
+
+  orderForm.addEventListener('submit', e => {
+    e.preventDefault();
+    formMessage.style.display = 'none';
+
+    let totalQty = 0;
+    document.querySelectorAll('td.qty').forEach(td => {
+      totalQty += Number(td.textContent);
+    });
+    if (totalQty <= 0) {
+      formMessage.textContent = 'กรุณาเลือกสินค้าที่ต้องการสั่งซื้ออย่างน้อย 1 รายการ';
+      formMessage.style.display = 'block';
+      return;
+    }
+
+    const buyerName = orderForm.buyerName.value.trim();
+    const address = orderForm.address.value.trim();
+    const phone = orderForm.phone.value.trim();
+
+    if (!buyerName || !address || !phone) {
+      formMessage.textContent = 'กรุณากรอกข้อมูลให้ครบถ้วนทุกช่อง';
+      formMessage.style.display = 'block';
+      return;
+    }
+
+    let orderSummary = `ชื่อผู้ซื้อ: ${buyerName}\nที่อยู่: ${address}\nเบอร์โทร: ${phone}\n\nรายการสั่งซื้อ:\n`;
+
+    document.querySelectorAll('tbody tr').forEach(row => {
+      const qty = Number(row.querySelector('td.qty').textContent);
+      if (qty > 0) {
+        const name = row.getAttribute('data-name');
+        const price = Number(row.getAttribute('data-price'));
+        const sum = price * qty;
+        orderSummary += `- ${name} x${qty} = ${sum} บาท\n`;
+      }
+    });
+
+    orderSummary += `\nรวมทั้งหมด: ${Number(totalAmountDiv.textContent.match(/\d+/)[0])} บาท`;
+
+    alert("ส่งคำสั่งซื้อเรียบร้อย!\n\n" + orderSummary);
+
+    orderForm.reset();
+    document.querySelectorAll('td.qty').forEach(td => td.textContent = '0');
+    document.querySelectorAll('td.total').forEach(td => td.textContent = '0');
+    updateTotal();
+  });
+</script>
+
+</body>
+</html>
